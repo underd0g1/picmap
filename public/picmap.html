@@ -1,0 +1,58 @@
+<html>
+<head>
+  <title>javascript fetch</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+  integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+  crossorigin=""/>
+  <!-- Make sure you put this AFTER Leaflet's CSS -->
+<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+  integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+  crossorigin=""></script>
+  <link rel = 'stylesheet' type = 'text/css' href = 'picmap.css'>
+
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-search@2.3.7/dist/leaflet-search.src.css" />
+  <script src="https://unpkg.com/leaflet-search@2.3.7/dist/leaflet-search.src.js"></script>
+
+  <script src="http://labs.easyblog.it/maps/leaflet-search/examples/data/restaurant.geojson.js"></script>
+
+</head>
+  <body>
+
+  <div id = 'map'></div>
+
+<script>
+
+
+
+  var mymap = L.map(map).setView([40.0360265298117,-76.409912109375],5);
+
+  L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+      attribution: 'PicMap V1.0'
+  }).addTo(mymap);
+
+  var poiLayers = L.geoJSON(restaurant, {
+    onEachFeature: function(feature, layer) {
+      layer.bindPopup(feature.properties.amenity + '<br><b>' + feature.properties.name + '</b>');
+    }
+  });
+
+  L.control.search({
+      layer: poiLayers,
+      initial: false,
+      propertyName: 'name' // Specify which property is searched into.
+    })
+    .addTo(mymap);
+  // var circle = L.circle([42.532717786043285,-77.09844589233398], {
+  // 	color: 'red',
+  // 	fillColor: '#f03',
+  // 	fillOpacity: 0.5,
+  // 	radius: 1500
+  // }).addTo(mymap);
+  // circle.bindPopup('lake house');
+
+
+</script>
+
+  </body>
+</html>

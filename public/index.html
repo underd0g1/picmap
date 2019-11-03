@@ -1,0 +1,57 @@
+<html>
+    <head>
+      <title>static page</title>
+    </head>
+<body>
+  <script>
+    if('geolocation' in navigator){
+      console.log('location available');
+      navigator.geolocation.getCurrentPosition(async function(position) {
+        console.log(position);
+        const lat = position.coords.latitude;
+        const long = position.coords.longitude;
+        //console.log(lat,long);
+        const data = {lat,long};
+        const options ={
+          method: 'POST',
+          headers:{
+            'Content-Type': 'application/JSON'
+          },
+          body: JSON.stringify(data)
+        };
+        const response = await fetch ('/api', options);
+        const json = await response.json();
+        console.log(json);
+
+      });
+    }
+    else{
+      console.log('location not available');
+    }
+
+
+
+
+
+    async function getdata(){
+      const response = await fetch('/api');
+      const data = await response.json();
+      console.log(data);
+      console.log(data[0].lat);
+      console.log(data[0].long);
+    }
+    getdata();
+
+  </script>
+
+
+
+
+
+
+  <h1>HELLO Server</h1>
+<p> this is a node static file test</p>
+
+
+</body>
+</html>
